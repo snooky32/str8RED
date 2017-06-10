@@ -3,12 +3,16 @@ package com.str8red.str8red;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -50,27 +54,18 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                final RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-                StringRequest stringRequest = new StringRequest(Request.Method.POST,server_url,
-
-                        new Response.Listener<String>(){
-                            @Override
-                            public void onResponse(String response) {
-                                textView.setText(response);
-                                requestQueue.stop();
-                            }
-                        }, new Response.ErrorListener() {
+                wv.evaluateJavascript("fromAndroid()", new ValueCallback<String>() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        textView.setText("Something went wrong");
-                        error.printStackTrace();
-                        requestQueue.stop();
+                    public void onReceiveValue(String value) {
+                        textView.setText(value);
                     }
                 });
-                requestQueue.add(stringRequest);
             }
         });
         //End of volley test
+
+
+
 
         wv = (WebView) findViewById(R.id.wv);
         //Enable JavaScript
@@ -84,9 +79,40 @@ public class MainActivity extends AppCompatActivity {
         wv.getSettings().setDatabaseEnabled(true);
         wv.getSettings().setAppCacheEnabled(true);
         wv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+
         //Load Url
         wv.loadUrl("https://str8red.com/");
-        wv.setWebViewClient(new WebViewClient());
+        //wv.setWebViewClient(new WebViewClient());
+
+        wv.setWebViewClient(new myWebClient());
+
+
+
+        textView.setText("CUNT:");
+
+    }
+
+    public class myWebClient extends WebViewClient {
+
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            // TODO Auto-generated method stub
+            super.onPageFinished(view, url);
+
+            wv.evaluateJavascript("fromAndroid()", new ValueCallback<String>() {
+                @Override
+                public void onReceiveValue(String value) {
+                    textView.setText(value);
+                }
+            });
+
+
+
+
+
+        }
+
     }
 
     public void btnSettings_onClick(View view) {
