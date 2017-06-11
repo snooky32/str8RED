@@ -15,12 +15,6 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     WebView wv;
 
-    //Volley test
-    Button button;
-    TextView textView;
-    //End of volley test
-
-
     // When Back Pressed Go Back
     @Override
     public void onBackPressed() {
@@ -32,11 +26,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        textView = (TextView)findViewById(R.id.txt);
 
         wv = (WebView) findViewById(R.id.wv);
         //Enable JavaScript
@@ -54,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
         //Load Url
         wv.loadUrl("https://str8red.com/");
         wv.setWebViewClient(new myWebClient());
-
-        textView.setText("CUNT:");
-
     }
 
     public class myWebClient extends WebViewClient {
@@ -66,18 +55,23 @@ public class MainActivity extends AppCompatActivity {
             // TODO Auto-generated method stub
             super.onPageFinished(view, url);
 
-            wv.evaluateJavascript("fromAndroid()", new ValueCallback<String>() {
-                @Override
-                public void onReceiveValue(String value) {
-                    String[] separated = value.split(" ");
-                    //separated[0]; // logged in True Or False
-                    //separated[1]; // Notifications 1 or 0
-                    //separated[2]; // More Notifications or 1 or 0
-                    textView.setText(separated[2].replace("\"", ""));
-                }
-            });
-        }
+            String CurrentURL = wv.getUrl();
 
+            if (CurrentURL == "https://str8red.com/") {
+                wv.evaluateJavascript("fromAndroid()", new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+                        String[] separated = value.split(" ");
+                        //separated[0]; // logged in True Or False
+                        //separated[1]; // Notifications 1 or 0
+                        //separated[2]; // More Notifications or 1 or 0
+                        String loggedIn = separated[0].replace("\"", "");
+                        String Notify1 = separated[1].replace("\"", "");
+                        String Notify2 = separated[2].replace("\"", "");
+                    }
+                });
+            }
+        }
     }
 
     public void btnSettings_onClick(View view) {
