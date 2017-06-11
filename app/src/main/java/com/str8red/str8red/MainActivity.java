@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     //End of Settings Button
 
     //Play Button
+
     public void btnPlay_onClick(View view) {
         wv.loadUrl("https://str8red.com/selectteams/0/0");
         wv.setWebViewClient(new myWebClient());
