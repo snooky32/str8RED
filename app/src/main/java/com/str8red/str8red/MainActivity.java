@@ -3,23 +3,14 @@ package com.str8red.str8red;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 public class MainActivity extends AppCompatActivity {
     WebView wv;
@@ -27,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     //Volley test
     Button button;
     TextView textView;
-    String server_url = "https://str8red.com/loggedincheck";
     //End of volley test
 
 
@@ -39,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-
-
     }
 
     @Override
@@ -48,24 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Secton Added for volley test
-        button = (Button)findViewById(R.id.bn);
         textView = (TextView)findViewById(R.id.txt);
-        button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                wv.evaluateJavascript("fromAndroid()", new ValueCallback<String>() {
-                    @Override
-                    public void onReceiveValue(String value) {
-                        textView.setText(value);
-                    }
-                });
-            }
-        });
-        //End of volley test
-
-
-
 
         wv = (WebView) findViewById(R.id.wv);
         //Enable JavaScript
@@ -82,18 +53,13 @@ public class MainActivity extends AppCompatActivity {
 
         //Load Url
         wv.loadUrl("https://str8red.com/");
-        //wv.setWebViewClient(new WebViewClient());
-
         wv.setWebViewClient(new myWebClient());
-
-
 
         textView.setText("CUNT:");
 
     }
 
     public class myWebClient extends WebViewClient {
-
 
         @Override
         public void onPageFinished(WebView view, String url) {
@@ -103,14 +69,13 @@ public class MainActivity extends AppCompatActivity {
             wv.evaluateJavascript("fromAndroid()", new ValueCallback<String>() {
                 @Override
                 public void onReceiveValue(String value) {
-                    textView.setText(value);
+                    String[] separated = value.split(" ");
+                    //separated[0]; // logged in True Or False
+                    //separated[1]; // Notifications 1 or 0
+                    //separated[2]; // More Notifications or 1 or 0
+                    textView.setText(separated[2].replace("\"", ""));
                 }
             });
-
-
-
-
-
         }
 
     }
@@ -123,7 +88,5 @@ public class MainActivity extends AppCompatActivity {
     private void startActvity(Intent intent) {
         startActivity(intent);
     }
-
-
 
 }
