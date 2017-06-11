@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Settings Button
     public void btnSettings_onClick(View view) {
         Intent intent=new Intent(this,SettingsActivity.class);
         startActvity(intent);
@@ -80,5 +81,13 @@ public class MainActivity extends AppCompatActivity {
     private void startActvity(Intent intent) {
         startActivity(intent);
     }
+    //End of Settings Button
+
+    //Play Button
+    public void btnPlay_onClick(View view) {
+        wv.loadUrl("https://str8red.com/selectteams/0/0");
+        wv.setWebViewClient(new myWebClient());
+    }
+    //End of Play Button
 
 }
