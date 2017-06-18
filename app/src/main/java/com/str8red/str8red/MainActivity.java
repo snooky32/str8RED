@@ -15,6 +15,7 @@ import android.webkit.WebViewClient;
 public class MainActivity extends AppCompatActivity {
     WebView wv;
     Boolean fish;
+    Boolean shark;
 
     // When Back Pressed Go Back
     @Override
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                         String loggedIn = separated[0].replace("\"", "");
                         String Notify1 = separated[1].replace("\"", "");
                         String Notify2 = separated[2].replace("\"", "");
+                        shark = Boolean.valueOf(loggedIn);
                     }
                 });
             }
