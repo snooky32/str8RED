@@ -1,7 +1,9 @@
 package com.str8red.str8red;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.ValueCallback;
@@ -12,6 +14,7 @@ import android.webkit.WebViewClient;
 
 public class MainActivity extends AppCompatActivity {
     WebView wv;
+    Boolean fish;
 
     // When Back Pressed Go Back
     @Override
@@ -44,6 +47,16 @@ public class MainActivity extends AppCompatActivity {
         //Load Url
         wv.loadUrl("https://str8red.com/");
         wv.setWebViewClient(new myWebClient());
+
+        fish = false;
+
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        prefs.putBoolean("notifications_team_pick",fish);
+        prefs.putBoolean("notifications_results", true);
+        prefs.putBoolean("notifications_news", fish);
+        prefs.commit();
+
+
     }
 
     public class myWebClient extends WebViewClient {

@@ -159,7 +159,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_notification);
-
+            //PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
         }
 
         @Override

@@ -3,19 +3,19 @@
 
     <SwitchPreference
         android:defaultValue="true"
-        android:key="notifications_new_message"
+        android:key="notifications_team_pick"
         android:title="Team Pick Reminders" />
 
 
     <SwitchPreference
         android:defaultValue="true"
-        android:key="notifications_new_message"
+        android:key="notifications_results"
         android:title="Results Notifications" />
 
 
     <SwitchPreference
         android:defaultValue="true"
-        android:key="notifications_new_message"
+        android:key="notifications_news"
         android:title="News" />
 
 </PreferenceScreen>
