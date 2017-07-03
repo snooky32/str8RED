@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(this).edit();
         prefs.putBoolean("notifications_team_pick",fish);
         prefs.putBoolean("notifications_results", true);
-        prefs.putBoolean("notifications_news", fish);
+        prefs.putBoolean("notifications_news", shark);
         prefs.commit();
 
 
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                         String loggedIn = separated[0].replace("\"", "");
                         String Notify1 = separated[1].replace("\"", "");
                         String Notify2 = separated[2].replace("\"", "");
-                        shark = Boolean.valueOf(loggedIn);
+                        shark = false;
                     }
                 });
             }
