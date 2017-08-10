@@ -10,6 +10,8 @@ import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.content.Context;
+import android.util.Log;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,20 +49,27 @@ public class MainActivity extends AppCompatActivity {
 
         //Load Url
         wv.loadUrl("https://str8red.com/");
-        wv.setWebViewClient(new myWebClient());
-
-        fish = false;
+        // wv.setWebViewClient(new myWebClient());
+        wv.setWebViewClient(new myWebClient(this));
 
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(this).edit();
-        prefs.putBoolean("notifications_team_pick",fish);
-        prefs.putBoolean("notifications_results", true);
-        prefs.putBoolean("notifications_news", shark);
+        prefs.putBoolean("notifications_team_pick",false);
+        prefs.putBoolean("notifications_results", false);
+
         prefs.commit();
+
+
 
 
     }
 
     public class myWebClient extends WebViewClient {
+
+        private Context context;
+
+        public myWebClient(Context context) {
+            this.context = context;
+        }
 
         @Override
         public void onPageFinished(WebView view, String url) {
@@ -69,18 +78,24 @@ public class MainActivity extends AppCompatActivity {
 
             String CurrentURL = wv.getUrl();
 
-            if (CurrentURL == "https://str8red.com/") {
+            Log.d("step 0", CurrentURL);
+
+            if (CurrentURL.equals("https://str8red.com/welcome/") ) {
+                Log.d("step 1", CurrentURL);
                 wv.evaluateJavascript("fromAndroid()", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
+                        Log.d("step 2", "2");
                         String[] separated = value.split(" ");
-                        //separated[0]; // logged in True Or False
-                        //separated[1]; // Notifications 1 or 0
-                        //separated[2]; // More Notifications or 1 or 0
                         String loggedIn = separated[0].replace("\"", "");
                         String Notify1 = separated[1].replace("\"", "");
                         String Notify2 = separated[2].replace("\"", "");
-                        shark = false;
+
+                        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                        prefs.putBoolean("notifications_team_pick", Boolean.valueOf(Notify1));
+                        prefs.putBoolean("notifications_results",  Boolean.valueOf(Notify2));
+
+                        prefs.commit();
                     }
                 });
             }
@@ -102,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnPlay_onClick(View view) {
         wv.loadUrl("https://str8red.com/selectteams/0/0");
-        wv.setWebViewClient(new myWebClient());
+        //wv.setWebViewClient(new myWebClient());
     }
     //End of Play Button
 

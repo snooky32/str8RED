@@ -1,0 +1,15 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="notifications_team_pick"
+        android:title="Team Pick Reminders" />
+
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="notifications_results"
+        android:title="Results Notifications" />
+
+</PreferenceScreen>

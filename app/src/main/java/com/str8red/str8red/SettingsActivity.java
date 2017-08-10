@@ -15,6 +15,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 
 import java.util.List;
 
@@ -39,12 +40,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
 
+            Log.d("Am I: ", "Here");
+
             if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
                 // the preference's 'entries' list.
                 ListPreference listPreference = (ListPreference) preference;
                 int index = listPreference.findIndexOfValue(stringValue);
-
+                
                 // Set the summary to reflect the new value.
                 preference.setSummary(
                         index >= 0
@@ -55,6 +58,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
                 preference.setSummary(stringValue);
+                Log.d("Hope2: ", "Hope2");
             }
             return true;
         }
@@ -81,6 +85,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     private static void bindPreferenceSummaryToValue(Preference preference) {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
+        Log.d("Hope6: ", "Hope6");
 
         // Trigger the listener immediately with the preference's
         // current value.
@@ -95,8 +100,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 new NotificationPreferenceFragment()).commit();
+        Log.d("Hope4: ", "Hope4");
 
     }
+
+
+
 
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
@@ -112,6 +121,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         int id = item.getItemId();
+        Log.d("Hope5: ", "Hope5");
         if (id == android.R.id.home) {
             if (!super.onMenuItemSelected(featureId, item)) {
                 NavUtils.navigateUpFromSameTask(this);
@@ -158,7 +168,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_notification);
+            addPreferencesFromResource(R.xml.pref_notification2);
             //PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
         }
 
